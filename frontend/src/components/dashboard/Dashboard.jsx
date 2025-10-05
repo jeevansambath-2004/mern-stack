@@ -99,52 +99,92 @@ const Dashboard = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <motion.h1
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="text-2xl font-bold text-gray-900 dark:text-white"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Todo App
+                TODO LIST
               </motion.h1>
             </div>
 
             <div className="flex items-center space-x-4">
               {/* Search Bar */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
+              <motion.div 
+                className="relative group"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-primary-500 transition-colors duration-200" />
+                <motion.input
                   type="text"
-                  placeholder="Search todos..."
+                  placeholder="Search todos... (Press '/' to focus)"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="input pl-10 w-64"
+                  className="input pl-10 w-64 hover:border-primary-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-all duration-200 hover:shadow-md"
                   ref={searchRef}
+                  whileFocus={{ scale: 1.02 }}
                 />
                 {searchTerm && (
-                  <button
+                  <motion.button
                     onClick={() => setSearchTerm('')}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary-500 transition-colors duration-200"
+                    whileHover={{ scale: 1.2, rotate: 90 }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <X className="w-4 h-4" />
-                  </button>
+                  </motion.button>
                 )}
-              </div>
+              </motion.div>
 
               {/* Admin Panel Link (visible to admins) */}
               {user?.role === 'admin' && (
-                <Link to="/admin" className="btn btn-primary btn-sm">
-                  Admin Panel
-                </Link>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <Link 
+                    to="/admin" 
+                    className="btn btn-primary btn-sm shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 relative overflow-hidden group"
+                  >
+                    <motion.span 
+                      className="relative z-10"
+                      whileHover={{ x: 2 }}
+                    >
+                      Admin Panel
+                    </motion.span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                  </Link>
+                </motion.div>
               )}
 
               {/* Filter Button */}
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setShowFilters(!showFilters)}
-                className="btn btn-secondary btn-sm"
+                className={`btn btn-sm transition-all duration-300 ${
+                  showFilters 
+                    ? 'btn-primary shadow-lg' 
+                    : 'btn-secondary hover:btn-primary'
+                }`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
               >
-                <Filter className="w-4 h-4 mr-2" />
+                <motion.div
+                  animate={{ rotate: showFilters ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Filter className="w-4 h-4 mr-2" />
+                </motion.div>
                 Filters
               </motion.button>
 
@@ -267,12 +307,31 @@ const Dashboard = () => {
             {/* Add New Task button */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
               <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="btn btn-accent"
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                  y: -2
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="btn btn-accent shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 relative overflow-hidden group"
                 onClick={() => { setEditingTodo(null); setShowTodoForm(true); }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
               >
-                <Plus className="w-4 h-4" style={{ marginRight: 8 }} /> Add New Task
+                <motion.div
+                  className="flex items-center"
+                  whileHover={{ x: 2 }}
+                >
+                  <motion.div
+                    animate={{ rotate: [0, 90, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  >
+                    <Plus className="w-4 h-4" style={{ marginRight: 8 }} />
+                  </motion.div>
+                  Add New Task
+                </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
               </motion.button>
             </div>
             {/* Filters Panel */}
@@ -294,16 +353,48 @@ const Dashboard = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="card"
+              className="card hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary-200 dark:hover:border-primary-800"
+              whileHover={{ y: -2 }}
             >
-              <div className="card-header">
-                <h2 className="card-title">
+              <motion.div 
+                className="card-header"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                <motion.h2 
+                  className="card-title text-xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-200 dark:to-gray-400 bg-clip-text text-transparent"
+                  whileHover={{ scale: 1.02 }}
+                >
                   {searchTerm ? `Search Results for "${searchTerm}"` : 'Today'}
-                </h2>
-                <p className="card-description">
-                  {todoLoading ? 'Loading...' : `${filteredTodos.length} todos found`}
-                </p>
-              </div>
+                </motion.h2>
+                <motion.p 
+                  className="card-description"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  {todoLoading ? (
+                    <span className="flex items-center">
+                      <motion.div
+                        className="w-4 h-4 border-2 border-primary-500 border-t-transparent rounded-full mr-2"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      />
+                      Loading...
+                    </span>
+                  ) : (
+                    <motion.span
+                      key={filteredTodos.length}
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className="font-medium text-primary-600 dark:text-primary-400"
+                    >
+                      {filteredTodos.length} todos found
+                    </motion.span>
+                  )}
+                </motion.p>
+              </motion.div>
               
               <div className="card-content">
                 {todoLoading ? (
@@ -334,13 +425,31 @@ const Dashboard = () => {
                     </p>
                     {!searchTerm && (
                       <motion.button
-                        whileHover={{ scale: 1.05 }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                          y: -2
+                        }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setShowTodoForm(true)}
-                        className="btn btn-primary"
+                        className="btn btn-primary shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 relative overflow-hidden group"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1 }}
                       >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Your First Todo
+                        <motion.div
+                          className="flex items-center relative z-10"
+                          whileHover={{ x: 2 }}
+                        >
+                          <motion.div
+                            animate={{ rotate: [0, 180, 360] }}
+                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+                          >
+                            <Plus className="w-4 h-4 mr-2" />
+                          </motion.div>
+                          Add Your First Todo
+                        </motion.div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                       </motion.button>
                     )}
                   </div>
@@ -360,6 +469,29 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Floating Action Button */}
+      <motion.button
+        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center justify-center z-50 group"
+        onClick={() => { setEditingTodo(null); setShowTodoForm(true); }}
+        whileHover={{ 
+          scale: 1.1,
+          rotate: 90,
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+        }}
+        whileTap={{ scale: 0.9 }}
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, type: "spring", stiffness: 200 }}
+      >
+        <motion.div
+          animate={{ rotate: [0, 180, 360] }}
+          transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+        >
+          <Plus className="w-6 h-6" />
+        </motion.div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+      </motion.button>
 
       {/* Todo Form Modal */}
       <AnimatePresence>

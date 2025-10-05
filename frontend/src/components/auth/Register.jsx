@@ -47,6 +47,11 @@ const Register = () => {
       >
         <div className="card shadow-strong">
           <div className="card-header text-center">
+            {/* Todo List App Title */}
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 font-mono tracking-wider">
+              TODO LIST
+            </h1>
+            
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -55,9 +60,9 @@ const Register = () => {
             >
               <CheckCircle className="w-8 h-8 text-primary-600 dark:text-primary-400" />
             </motion.div>
-            <h1 className="card-title text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
+            <h2 className="card-title text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
               Create Account
-            </h1>
+            </h2>
             <p className="card-description mt-2">
               Join us and start organizing your tasks
             </p>
@@ -94,13 +99,9 @@ const Register = () => {
                   />
                 </div>
                 {errors.username && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1 text-sm text-danger-600 dark:text-danger-400"
-                  >
+                  <p className="mt-1 text-sm text-danger-600 dark:text-danger-400">
                     {errors.username.message}
-                  </motion.p>
+                  </p>
                 )}
               </div>
 
@@ -125,13 +126,9 @@ const Register = () => {
                   />
                 </div>
                 {errors.email && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1 text-sm text-danger-600 dark:text-danger-400"
-                  >
+                  <p className="mt-1 text-sm text-danger-600 dark:text-danger-400">
                     {errors.email.message}
-                  </motion.p>
+                  </p>
                 )}
               </div>
 
@@ -163,13 +160,9 @@ const Register = () => {
                   </button>
                 </div>
                 {errors.password && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1 text-sm text-danger-600 dark:text-danger-400"
-                  >
+                  <p className="mt-1 text-sm text-danger-600 dark:text-danger-400">
                     {errors.password.message}
-                  </motion.p>
+                  </p>
                 )}
               </div>
 
@@ -198,22 +191,16 @@ const Register = () => {
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1 text-sm text-danger-600 dark:text-danger-400"
-                  >
+                  <p className="mt-1 text-sm text-danger-600 dark:text-danger-400">
                     {errors.confirmPassword.message}
-                  </motion.p>
+                  </p>
                 )}
               </div>
 
-              <motion.button
+              <button
                 type="submit"
                 disabled={loading || isSubmitting}
-                className="btn btn-primary btn-lg w-full relative overflow-hidden group"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="btn btn-primary btn-lg w-full"
               >
                 {loading || isSubmitting ? (
                   <div className="flex items-center justify-center">
@@ -226,7 +213,7 @@ const Register = () => {
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 )}
-              </motion.button>
+              </button>
             </form>
           </div>
 
