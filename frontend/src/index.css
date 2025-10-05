@@ -1,0 +1,524 @@
+:root {
+  --primary-50: #f0f9ff;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+  --gray-200: #e5e7eb;
+  --gray-100: #f3f4f6;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+}
+
+* {
+  border-color: var(--gray-200);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+body {
+  /* Softer neutral gradient background for a cleaner look */
+  background: linear-gradient(180deg, #e6f3ff 0%, #f2f8ff 100%);
+  color: var(--gray-900);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji",
+    "Segoe UI Emoji";
+}
+
+/* Main board container (rounded white surface with soft shadow) */
+.board {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 24px; /* ensure internal padding even if utilities are missing */
+}
+
+/* Sidebar/right panels inside the board */
+.panel {
+  background: #fafafa;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  padding: 16px;
+  min-height: 120px;
+}
+
+/* Layout helpers */
+.container {
+  max-width: 80rem; /* ~1280px */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.dashboard-grid {
+  display: grid; 
+  grid-template-columns: 1fr; /* stack on small screens */
+  gap: 1.5rem; /* 24px */
+}
+
+@media (min-width: 1024px) {
+  /* 12-column feel: 3 / 6 / 3 */
+  .dashboard-grid { grid-template-columns: 1fr 2fr 1fr; }
+}
+
+/* Simple flex utility for inline rows */
+.flex-row { display: flex; align-items: center; gap: 0.5rem; }
+
+/* Spacing utilities used by some sections */
+.space-y-2 > * + * { margin-top: 0.5rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+/* Button size variants used in components */
+.btn-sm { padding: 0.375rem 0.75rem; font-size: 0.8125rem; }
+.btn-lg { padding: 0.75rem 1.25rem; font-size: 1rem; }
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-500);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-600);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-700);
+}
+
+.btn-secondary {
+  background-color: var(--gray-100);
+  color: var(--gray-900);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-200);
+}
+
+/* Accent (yellow) button like template's Save changes */
+.btn-accent {
+  background-color: #facc15; /* amber-400 */
+  color: #111827; /* gray-900 for contrast */
+}
+.btn-accent:hover { background-color: #f59e0b; }
+.btn-accent:focus { box-shadow: 0 0 0 2px white, 0 0 0 4px #facc15; }
+
+.btn-danger {
+  background-color: var(--danger-600);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-700);
+}
+
+/* Ghost button (subtle, neutral) used for Admin Login link */
+.btn-ghost {
+  background-color: #f8fafc; /* very light gray */
+  color: var(--gray-700);
+  border: 1px solid var(--gray-200);
+}
+.btn-ghost:hover {
+  background-color: #eef2f7; /* slightly darker on hover */
+}
+
+/* Small shadow utility for header */
+.shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+/* Subtle card hover to feel interactive */
+.card {
+  transition: box-shadow .18s ease, transform .18s ease;
+}
+.card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-1px); }
+
+.input {
+  width: 100%;
+  height: 2.75rem; /* slightly taller for better vertical rhythm */
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem; /* keeps text vertically balanced */
+  box-sizing: border-box; /* consistent sizing */
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-500);
+}
+
+/* Subtle placeholder color for readability */
+.input::placeholder { color: var(--gray-500); }
+
+/* Buttons: slightly rounder with hover/active feedback */
+.btn { border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.10); }
+.btn:active { transform: translateY(0); box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+
+/* Utility shadows */
+.shadow-soft { box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.shadow-medium { box-shadow: 0 12px 28px rgba(0,0,0,.12); }
+
+/* --- Admin navigation (routing) styles --- */
+.admin-nav { gap: 4px; }
+.admin-nav .nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--gray-700);
+  text-decoration: none;
+}
+.dark .admin-nav .nav-link { color: var(--gray-300); }
+.admin-nav .nav-link:hover {
+  background-color: #f3f4f6; /* gray-100 */
+}
+.dark .admin-nav .nav-link:hover { background-color: #1f2937; /* gray-800 */ }
+.admin-nav .nav-link:visited { color: inherit; }
+.admin-nav .nav-link.active {
+  background-color: var(--primary-600);
+  color: #ffffff;
+}
+.admin-nav .nav-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--primary-600);
+}
+
+/* Priority chips used by TodoList */
+.priority-low    { background: #e8f5e9; color: #2e7d32; border-radius: 9999px; padding: 2px 8px; }
+.priority-medium { background: #fff8e1; color: #b26a00; border-radius: 9999px; padding: 2px 8px; }
+.priority-high   { background: #ffebee; color: #c62828; border-radius: 9999px; padding: 2px 8px; }
+.priority-urgent { background: #fdecea; color: #d32f2f; border-radius: 9999px; padding: 2px 8px; }
+
+/* List row styling for center list */
+.list-row {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.list-row + .list-row { margin-top: 8px; }
+.list-row:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); border-color: transparent; }
+
+/* Flat list style (no card boxes, just separators) */
+.list-flat {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.list-flat:first-child { border-top: 1px solid rgba(0,0,0,0.06); }
+.list-flat:hover { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.08); }
+
+/* Subtle separators inside cards (template style) */
+.card-header { border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: .5rem; margin-bottom: .5rem; }
+.card-title { font-size: 1.25rem; font-weight: 700; }
+.card-description { color: var(--gray-500); font-size: .875rem; }
+
+/* Stronger card shadow helper (used on auth cards) */
+.shadow-strong { box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 2px 10px rgba(0,0,0,0.06) !important; }
+
+/* Header typography like template */
+.app-title { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.01em; }
+.app-subtle { color: var(--gray-500); }
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Light + Dark support for a few commonly used utility classes */
+.bg-white { background-color: #ffffff; }
+.bg-gray-50 { background-color: #f9fafb; }
+.hover\:bg-gray-100:hover { background-color: #f3f4f6; }
+.border-b { border-bottom: 1px solid var(--gray-200); }
+.border-gray-200 { border-color: var(--gray-200) !important; }
+.text-gray-900 { color: var(--gray-900) !important; }
+.text-gray-600 { color: var(--gray-600) !important; }
+.text-white { color: #ffffff !important; }
+.w-64 { width: 16rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.max-w-7xl { max-width: 80rem; }
+.h-16 { height: 4rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+
+/* Flex alignment helpers used in header */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+/* Horizontal spacing helpers used in header clusters */
+.space-x-2 > * + * { margin-left: 0.5rem; }
+.space-x-4 > * + * { margin-left: 1rem; }
+
+/* Responsive padding helpers to mimic Tailwind classes used in JSX */
+@media (min-width: 640px) { /* sm */
+  .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) { /* lg */
+  .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* Dark theme tokens (enabled when .dark is on <html>) */
+.dark .bg-gray-800 { background-color: var(--gray-800); }
+.dark .bg-gray-900 { background-color: var(--gray-900); }
+.dark .border-gray-700 { border-color: var(--gray-700) !important; }
+.dark .text-white { color: #ffffff !important; }
+.dark .text-gray-300 { color: #d1d5db !important; }
+.dark .text-gray-400 { color: #9ca3af !important; }
+.dark .hover\:bg-gray-700:hover { background-color: #374151 !important; }
+
+/* Text color helpers used in forms */
+.text-danger-600 { color: var(--danger-600) !important; }
+.text-danger-400 { color: #f87171 !important; }
+.text-primary-600 { color: var(--primary-600) !important; }
+.dark .text-primary-400 { color: #60a5fa !important; }
+
+/* Skeleton loaders */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.6) 50%, rgba(255,255,255,0) 100%);
+  animation: shimmer 1.2s infinite;
+}
+.skeleton-text { height: 12px; }
+.skeleton-circle { border-radius: 9999px; }
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* --- Minimal utility classes for auth page alignment (Tailwind-like) --- */
+/* Layout */
+.min-h-screen { min-height: 100vh; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+
+/* Spacing */
+.p-4 { padding: 1rem; }
+
+/* Sizing */
+.w-full { width: 100%; }
+.max-w-md { max-width: 28rem; }
+
+/* Text */
+.text-center { text-align: center; }
+
+/* Optional: simple background gradient helper used in auth pages */
+.bg-gradient-to-br {
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+}
+
+/* Color tokens referenced by components (basic mapping) */
+
+/* Positioning helpers used in auth components */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.left-3 { left: 0.75rem; }
+.right-3 { right: 0.75rem; }
+.top-1\/2 { top: 50%; }
+.transform { transform: translate(0, 0); }
+.-translate-y-1\/2 { transform: translateY(-50%); }
+
+/* Spacing and alignment helpers */
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mb-4 { margin-bottom: 1rem; }
+.space-y-6 > * + * { margin-top: 1.5rem; }
+
+/* Radius */
+.rounded-full { border-radius: 9999px; }
+
+/* Sizes common in components */
+.w-5 { width: 1.25rem; }
+.h-5 { height: 1.25rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.w-16 { width: 4rem; }
+.h-16 { height: 4rem; }
+
+/* Input padding variants used by auth forms */
+.pl-10 { padding-left: 2.5rem; }
+.pr-10 { padding-right: 2.5rem; }
+
+/* Make gradient color helpers non-empty to satisfy linter */
+.from-primary-50 { background-color: transparent; }
+.to-primary-100 { background-color: transparent; }
+
+/* --- Polished radio button styles --- */
+/* Use native accent where supported for quick win */
+input[type="radio"] {
+  accent-color: var(--primary-600);
+}
+
+/* Custom look to ensure consistent styling across browsers */
+input[type="radio"] {
+  --radio-color: var(--primary-600);
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.125rem; /* 18px */
+  height: 1.125rem;
+  border: 2px solid var(--gray-300);
+  border-radius: 9999px;
+  background-color: #fff;
+  display: inline-grid;
+  place-content: center;
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, transform .08s ease;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.55rem; /* ~9px */
+  height: 0.55rem;
+  border-radius: 9999px;
+  transform: scale(0);
+  transition: transform .12s ease-in-out;
+  box-shadow: inset 0 0 0 8px var(--radio-color);
+}
+
+input[type="radio"]:checked {
+  border-color: var(--radio-color);
+  box-shadow: 0 0 0 1px var(--radio-color), 0 0 0 4px rgba(2,132,199,0.12);
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="radio"]:hover {
+  border-color: var(--primary-500);
+  box-shadow: 0 2px 6px rgba(0,0,0,.10);
+}
+
+input[type="radio"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.25), 0 0 0 1px var(--radio-color);
+}
+
+input[type="radio"][disabled] {
+  cursor: not-allowed;
+  opacity: .6;
+}
+
+/* Size variants */
+.radio-sm { width: 0.9rem; height: 0.9rem; }
+.radio-lg { width: 1.25rem; height: 1.25rem; }
+
+/* Color modifiers (apply to the input element) */
+.radio-primary { --radio-color: var(--primary-600); }
+.radio-success { --radio-color: var(--success-600); }
+.radio-danger  { --radio-color: var(--danger-600); }
+
+/* Optional: pill-style wrapper when radio is inside the label */
+.radio-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 9999px;
+  background: rgba(250, 204, 21, 0.12); /* light transparent yellow */
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  cursor: pointer;
+  user-select: none;
+}
+.radio-option:hover {
+  border-color: var(--primary-500);
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  background: rgba(47, 191, 7, 0.073);
+}
+/* Highlight when the nested radio is checked (modern :has() support) */
+.radio-option:has(input[type="radio"]:checked) {
+  border-color: var(--radio-color);
+  background: linear-gradient(180deg, rgba(250, 204, 21, 0.22), rgba(250, 204, 21, 0.12));
+}
+
+/* Helper for grouping radios inline */
+.radio-group { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+/* --- Todo item alignment helpers --- */
+/* Ensures the toggle (checkbox/icon) and text are vertically centered with spacing */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* If any native checkbox is used, keep it sized and aligned nicely */
+.todo-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}

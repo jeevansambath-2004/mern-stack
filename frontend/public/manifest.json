@@ -1,0 +1,10 @@
+{
+  "name": "Todo App - MERN Stack",
+  "short_name": "TodoApp",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0284c7",
+  "description": "A beautiful MERN stack todo application with modern UI and advanced features",
+  "icons": []
+}
