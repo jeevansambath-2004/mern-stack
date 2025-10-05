@@ -33,6 +33,7 @@ A beautiful, feature-rich todo application built with the MERN stack (MongoDB, E
 - Sort by various criteria
 - Statistics and progress tracking
 - Responsive design for all devices
+- **Email Notifications**: Automatic email notifications for todo completion/incompletion
 
 ## 🛠️ Tech Stack
 
@@ -48,6 +49,7 @@ A beautiful, feature-rich todo application built with the MERN stack (MongoDB, E
 - **helmet** - Security headers
 - **morgan** - HTTP request logger
 - **compression** - Response compression
+- **nodemailer** - Email notifications
 
 ### Frontend
 - **React 18** - UI library
@@ -65,7 +67,6 @@ A beautiful, feature-rich todo application built with the MERN stack (MongoDB, E
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher)
 - MongoDB (local or Atlas)
 - npm or yarn
 
@@ -73,14 +74,12 @@ A beautiful, feature-rich todo application built with the MERN stack (MongoDB, E
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd mern-todo-app
+   git clone https://github.com/jeevansambath-2004/mern-stack.git
+   cd mern-stack
    ```
 
 2. **Install dependencies**
    ```bash
-   # Install root dependencies
-   npm install
    
    # Install backend dependencies
    cd backend
@@ -93,13 +92,20 @@ A beautiful, feature-rich todo application built with the MERN stack (MongoDB, E
 
 3. **Environment Setup**
    
-   Create a `.env` file in the backend directory:
+   Create a `config.env` file in the backend directory:
    ```env
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/todo-app
    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
    NODE_ENV=development
+   GMAIL_USER=your-gmail-address@gmail.com
+   GMAIL_APP_PASSWORD=your-gmail-app-password
    ```
+   
+   **For Email Notifications:**
+   - Set your Gmail address in `GMAIL_USER`
+   - Generate a Gmail App Password at: Google Account > Security > 2-Step Verification > App passwords
+   - Set the app password in `GMAIL_APP_PASSWORD`
 
 4. **Start MongoDB**
    ```bash
@@ -210,22 +216,74 @@ mern-todo-app/
 
 ## 🚀 Deployment
 
-### Backend Deployment (Heroku)
-1. Create a Heroku app
-2. Set environment variables in Heroku dashboard
-3. Connect your GitHub repository
-4. Deploy automatically on push
+### Option 1: Render (Recommended - Free Tier Available)
 
-### Frontend Deployment (Vercel/Netlify)
-1. Build the frontend: `npm run build`
-2. Deploy the `build` folder to your preferred platform
+#### Backend Deployment on Render:
+1. **Create a Render account** at [render.com](https://render.com)
+2. **Connect your GitHub repository**
+3. **Create a new Web Service**:
+   - **Root Directory**: `backend`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+4. **Set Environment Variables**:
+   ```env
+   PORT=5000
+   MONGODB_URI=your-mongodb-atlas-uri
+   JWT_SECRET=your-production-jwt-secret
+   NODE_ENV=production
+   GMAIL_USER=your-gmail-address@gmail.com
+   GMAIL_APP_PASSWORD=your-gmail-app-password
+   ```
+
+#### Frontend Deployment on Render:
+1. **Create a new Static Site**
+2. **Settings**:
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm run build`
+   - **Publish Directory**: `build`
+3. **Update API URL** in frontend to point to your backend service
+
+### Option 2: Vercel + Railway
+
+#### Backend on Railway:
+1. **Connect GitHub repository** to [Railway](https://railway.app)
+2. **Deploy from `backend` folder**
+3. **Set environment variables** in Railway dashboard
+
+#### Frontend on Vercel:
+1. **Import project** from GitHub to [Vercel](https://vercel.com)
+2. **Set Root Directory** to `frontend`
+3. **Deploy automatically**
+
+### Option 3: Netlify + Heroku
+
+#### Backend on Heroku:
+1. **Create Heroku app**
+2. **Set buildpack** to Node.js
+3. **Configure environment variables**
+4. **Deploy from GitHub**
+
+#### Frontend on Netlify:
+1. **Connect GitHub repository** to [Netlify](https://netlify.com)
+2. **Build settings**:
+   - **Base directory**: `frontend`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `frontend/build`
+
+### Database Setup (MongoDB Atlas)
+1. **Create account** at [MongoDB Atlas](https://www.mongodb.com/atlas)
+2. **Create a cluster** (free tier available)
+3. **Get connection string** and add to `MONGODB_URI`
+4. **Whitelist your deployment platform's IP** or use `0.0.0.0/0` for all IPs
 
 ### Environment Variables for Production
 ```env
 PORT=5000
-MONGODB_URI=your-mongodb-atlas-uri
-JWT_SECRET=your-production-jwt-secret
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/todoapp
+JWT_SECRET=your-super-secure-production-jwt-secret-at-least-32-characters
 NODE_ENV=production
+GMAIL_USER=your-gmail-address@gmail.com
+GMAIL_APP_PASSWORD=your-gmail-app-password
 ```
 
 ## 🤝 Contributing
